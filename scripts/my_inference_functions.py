@@ -1,4 +1,4 @@
-import jetson.inference as inf
+import jetson.inference as inference
 import jetson.utils as utils
 from math import ceil, floor
 import cv2
@@ -6,8 +6,8 @@ import numpy as np
 from cuda_functions import *
 import time
 
-def getNet(model_dir, threshold):
-    return inf.detectNet(argv=["--model=" + model_dir + "/ssd-mobilenet.onnx", "--labels=" + model_dir + "/labels.txt", '--input-blob=input_0', '--output-cvg=scores', '--output-bbox=boxes', '--overlay=none'], threshold = threshold)
+def getNet(model_dir, threshold=0.5):
+    return inference.detectNet(argv=["--model=" + model_dir + "/ssd-mobilenet.onnx", "--labels=" + model_dir + "/labels.txt", '--input-blob=input_0', '--output-cvg=scores', '--output-bbox=boxes', '--overlay=none'], threshold = threshold)
 
 def getCroppedLicensePlate(original_cuda_img, detection):
     crop_roi = (floor(detection.Left), floor(detection.Top), ceil(detection.Right), ceil(detection.Bottom))
