@@ -1,5 +1,4 @@
 import tensorrt as trt
-import pycuda.autoinit
 import pycuda.driver as cuda
 
 class HostDeviceMem(object):
@@ -51,17 +50,3 @@ def do_inference(context, bindings, inputs, outputs, stream, batch_size=1):
     [cuda.memcpy_dtoh_async(out.host, out.device, stream) for out in outputs]
     stream.synchronize()
     return [out.host for out in outputs]
-
-def getEngineLabelsContextBuffers(trt_labels_path, trt_engine_path):
-    trt_logger = trt.Logger(trt.Logger.WARNING)
-    trt_runtime = trt.Runtime(trt_logger)
-    trt_engine = load_engine(trt_runtime, trt_engine_path)
-    context = trt_engine.create_execution_context()
-    buffers = allocate_buffers(trt_engine)
-
-    label_text = open(trt_labels_path, "r").readlines()
-    labels = []
-    for line in label_text:
-        labels.append(line[0])
-
-    return labels, context, buffers
