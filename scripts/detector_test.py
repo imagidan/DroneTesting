@@ -16,7 +16,7 @@ while True:
         resizedImg = licensePlateDetector.resizeImg(cropImg)
         plateNumber = reader.read(resizedImg)
         print(plateNumber)
-        cv2.imshow("Frame", resizedImg)
+        cv2.imshow("Frame", detectionsImg)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

@@ -1,8 +1,8 @@
-from cuda_functions import *
+from cuda_engine_functions import *
 
 class Reader:
 
-    def __init__(self, labels_path="../lpr/us_lp_characters.txt", engine_path="../lpr/lpr_us_onnx_b16.engine"):
+    def __init__(self, labels_path="../lpr/us_lp_characters.txt", engine_path="../lpr/lprnet.engine"):
         trt_logger = trt.Logger(trt.Logger.WARNING)
         trt_runtime = trt.Runtime(trt_logger)
         trt_engine = load_engine(trt_runtime, engine_path)
