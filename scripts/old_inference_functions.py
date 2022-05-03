@@ -3,7 +3,7 @@ import jetson.utils as utils
 from math import ceil, floor
 import cv2
 import numpy as np
-from cuda_functions import *
+from scripts.cuda_engine_functions import *
 import time
 
 def getNet(model_dir, threshold=0.5):

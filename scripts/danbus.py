@@ -1,5 +1,5 @@
 import threading
-from serial_arduino_functions import *
+from scripts.serial import *
 
 class DanBus:
 

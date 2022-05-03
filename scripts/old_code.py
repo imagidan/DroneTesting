@@ -1,14 +1,17 @@
 import cv2
 import jetson.utils as utils
-from cuda_functions import *
+from cuda_engine_functions import *
 from my_inference_functions import *
-from serial_arduino_functions import *
 from gamepad_go import *
+from detector import Detector
+from reader import Reader
 
 danbus = DanBus()
 relay = Gamepad_Relay(danbus)
 relay.start()
-labels, context, buffers = getEngineLabelsContextBuffers("../lpr/us_lp_characters.txt", "../lpr/lpr_us_onnx_b16.engine")
+
+licensePlateDetector = Detector("../models/license_plate_v5", 0.26)
+reader = Reader()
 
 def threaded(labels, context, buffers):
 

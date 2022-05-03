@@ -1,9 +1,9 @@
 import cv2
 import jetson.utils as utils
-from cuda_functions import *
+from scripts.cuda_engine_functions import *
 #from hc_12_functions import *
 from my_inference_functions import *
-from serial_arduino_functions import *
+from scripts.serial import *
 import configurator
 from dbInteract import *
 

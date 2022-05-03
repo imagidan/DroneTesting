@@ -14,8 +14,8 @@ while True:
     if len(detections) == 1:
         cropImg = licensePlateDetector.cropDetection(img, detections[0])
         resizedImg = licensePlateDetector.resizeImg(cropImg)
-        #plateNumber = reader.read(resizedImg)
-        #print(plateNumber)
+        plateNumber = reader.read(resizedImg)
+        print(plateNumber)
         cv2.imshow("Frame", resizedImg)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
