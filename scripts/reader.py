@@ -14,17 +14,14 @@ class Reader:
             self.labels.append(line[0])
 
     def read(self, img):
-        inputs, outputs, bindings, stream = self.buffers
-        inputs[0].host = img
+        Inputs, Outputs, Bindings, Stream = self.buffers
+        Inputs[0].host = img
         input_shape = (1, 3, 48, 96)
         self.context.set_binding_shape(0, input_shape)
-        outputs = do_inference(self.context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)
-        filtered_outputs = list(filter(lambda a: a != 35, outputs[0]))
+        myOut = do_inference(self.context, bindings=Bindings, inputs=Inputs, outputs=Outputs, stream=Stream)
+        filtered_outputs = list(filter(lambda a: a != 35, myOut[0]))
         license_plate_chars = ""
         for ind in filtered_outputs:
             license_plate_chars += self.labels[ind]
-        
-        print(img.shape)
-        print(len(self.labels))
     
         return license_plate_chars

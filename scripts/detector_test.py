@@ -5,8 +5,6 @@ import cv2
 licensePlateDetector = Detector("../models/license_plate_v5", 0.26)
 reader = Reader()
 cap = cv2.VideoCapture(0)
-avg = 0
-count = 0
 
 while True:
     ret, img = cap.read()
