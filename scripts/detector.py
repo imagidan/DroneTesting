@@ -16,7 +16,6 @@ class Detector:
     def detect(self, img):
         cudaImg = utils.cudaFromNumpy(img)
         detections = self.net.Detect(cudaImg)
-        #TODO threshold map
         detectionsImg = utils.cudaToNumpy(cudaImg)
         return detections, detectionsImg
     
@@ -25,6 +24,21 @@ class Detector:
     
     def resizeImg(self, img, width=96, height=48):
         return cv2.resize(img, (width, height))
+
+    def preprocess(self, resizedImg):
+        preprocessedImg = np.transpose(resizedImg, (2,0,1)).astype(np.float32)
+        preprocessedImg = np.expand_dims(preprocessedImg, axis=0)
+        preprocessedImg /= 255.0
+        preprocessedImg = np.ascontiguousarray(preprocessedImg)
+
+        return preprocessedImg
+
+    def getReaderInputImg(self, img, detection):
+        croppedImg = self.cropDetection(img, detection)
+        resizedImg = self.resizeImg(croppedImg)
+        preprocessedImg = self.preprocess(resizedImg)
+
+        return preprocessedImg        
     
     def getHorizontalAngle(self, detection):
         return (detection.Center[0] - self.imgW/2)/(self.imgW/2)*(self.FOV/2)

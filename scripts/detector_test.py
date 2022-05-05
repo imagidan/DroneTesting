@@ -8,13 +8,20 @@ cap = cv2.VideoCapture(0)
 
 while True:
     ret, img = cap.read()
+
     detections, detectionsImg = licensePlateDetector.detect(img)
+
     if len(detections) == 1:
-        cropImg = licensePlateDetector.cropDetection(img, detections[0])
-        resizedImg = licensePlateDetector.resizeImg(cropImg)
-        plateNumber = reader.read(resizedImg)
-        print(plateNumber)
-        cv2.imshow("Frame", detectionsImg)
+
+        detection = detections[0]
+
+        if detection.Confidence > 0.9:
+            
+            licensePlate = licensePlateDetector.getReaderInputImg(img, detection)
+            plateNumber = reader.read(licensePlate)
+            print(plateNumber)
+
+    cv2.imshow("Frame", detectionsImg)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

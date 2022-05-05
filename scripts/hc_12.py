@@ -1,12 +1,10 @@
-import serial
-import time
 import subprocess
-from serial import Serial
+from serialConnection import Serial
 
-class HC_12(Serial):
+class HC_12_Connection(Serial):
 
-    def __init__(self):
-        self.serial_port = self.selectPort
+    def __init__(self, baud=9600):
+        super.__init__(self, baud)
 
     def checkBoardType(self):
         out = subprocess.Popen(['cat', '/sys/module/tegra_fuse/parameters/tegra_chip_id'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

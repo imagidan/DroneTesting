@@ -2,7 +2,7 @@ import mysql.connector as mariadb
 import sys
 import os
 
-class DB:
+class DroneDB:
     
     def __init__(self):
         self.start_conn()

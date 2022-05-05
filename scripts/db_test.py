@@ -1,6 +1,6 @@
-from db import DB
+from db import DroneDB
 
-db = DB()
+db = DroneDB()
 db.update_plate("P19 SND", "isVisible", 1)
 
 g = input()
