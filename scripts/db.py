@@ -1,6 +1,5 @@
 import mysql.connector as mariadb
 import sys
-import os
 
 class DroneDB:
     

@@ -1,11 +1,11 @@
 import threading
-from scripts.serial import *
+import time
+from serialConnection import SerialConnection
 
 class DanBus:
 
     def __init__(self):
-        self.serial_port = getSerial()
-        self.once = True
+        self.serialConn = SerialConnection()
         self.reset()
 
     def start(self):
@@ -77,11 +77,10 @@ class DanBus:
 
     def send(self):
         self.msg = self.w + self.c + self.g + self.s + self.m + self.p + self.q + self.i + self.j + self.d + self.b + self.t + self.y + self.pi + self.r
-        sendMsg(self.serial_port, self.msg)
+        self.serialConn.sendMsg(self.msg)
         self.reset()
 
     def run(self):
         while 1:
-            #if getMsg(self.serial_port) == "a":
             self.send()
             time.sleep(0.04)
