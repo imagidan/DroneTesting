@@ -13,70 +13,57 @@ class DanBus:
         return self
 
     def reset(self):
-        self.w = ""
+        self.kpa_z = ""
+        self.kps_z = ""
+        self.kia_z = ""
+        self.kis_z = ""
+        self.kda_z = ""
+        self.kds_z = ""
+        self.t = ""
+        self.z = ""
+        self.z_mode = ""
         self.c = ""
         self.g = ""
         self.s = ""
-        self.m = ""
-        self.p = ""
-        self.q = ""
-        self.i = ""
-        self.j = ""
-        self.d = ""
-        self.b = ""
-        self.t = ""
-        self.y = ""
-        self.pi = ""
-        self.r = ""
-        self.z = ""
 
-    def setStabilize(self, num):
-        self.w = "w," + str(num) + ","
+    def setKpaZ(self, num):
+        self.kpa_z = "q," + str(num) + ","
+        
+    def setKpsZ(self, num):
+        self.kps_z = "p," + str(num) + ","
 
-    def config(self):
-        self.c = "h,"
+    def setKiaZ(self, num):
+        self.kia_z = "j," + str(num) + ","
+        
+    def setKisZ(self, num):
+        self.kis_z = "i," + str(num) + ","
 
-    def go(self):
+    def setKdaZ(self, num):
+        self.kda_z = "b," + str(num) + ","
+        
+    def setKdsZ(self, num):
+        self.kds_z = "d," + str(num) + ","
+
+    def setT(self, num):
+        self.t = "t," + str(num) + ","
+    
+    def setZ(self, num):
+        self.z = "z," + str(num) + ","
+
+    def setZMode(self, num):
+        self.z_mode = "m," + str(num) + ","
+
+    def setConfig(self):
+        self.c = "c,"
+
+    def setGo(self):
         self.g = "g,"
 
-    def stop(self):
+    def setStop(self):
         self.s = "s,"
 
-    def setP(self, num):
-        self.p = "p,{:2f}".format(num) + ","
-
-    def setQ(self, num):
-        self.q = "q,{:2f}".format(num) + ","
-
-    def setI(self, num):
-        self.i = "i,{:3f}".format(num) + ","
-
-    def setJ(self, num):
-        self.j = "j,{:3f}".format(num) + ","
-
-    def setD(self, num):
-        self.d = "d,{:2f}".format(num) + ","
-
-    def setB(self, num):
-        self.b = "b,{:2f}".format(num) + ","
-    
-    def throttle(self, num):
-        self.t = "t,{:1f}".format(num) + ","
-    
-    def yaw(self, num):
-        self.y = "y,{:1f}".format(num) + ","
-    
-    def pitch(self, num):
-        self.pi = "f,{:1f}".format(num) + ","
-    
-    def roll(self, num):
-        self.r = "r,{:1f}".format(num) + ","
-    
-    def setYawBias(self, num):
-        self.z = "z,{:3f}".format(num) + ","
-
     def send(self):
-        self.msg = self.w + self.c + self.g + self.s + self.m + self.p + self.q + self.i + self.j + self.d + self.b + self.t + self.y + self.pi + self.r
+        self.msg = self.kpa_z + self.kps_z + self.kia_z + self.kis_z + self.kda_z + self.kds_z + self.z + self.z_mode + self.c + self.g + self.s
         self.serialConn.sendMsg(self.msg)
         self.reset()
 

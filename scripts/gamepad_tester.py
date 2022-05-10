@@ -1,6 +1,8 @@
 from gamepad import Gamepad
+from danbus import DanBus
 
-gamepad = Gamepad("saved_constants.txt")
+danbus = DanBus()
+gamepad = Gamepad(danbus, "saved_constants.txt")
 gamepad.start()
 
 a = 0

@@ -101,7 +101,7 @@ class Gamepad:
                     self.state = 1
                 elif event.code == "BTN_PINKIE":
                     print("Constants not loaded")
-                    self.constants = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000]
+                    self.constants = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1000]
                     print("Config?")
                     self.state = 1
 
@@ -116,7 +116,7 @@ class Gamepad:
         for event in self.events:
             if event.state == 1:
                 if event.code == "BTN_TOP2":
-                    #self.danbus.config()
+                    self.danbus.setConfig()
                     print("Go?")
                     self.state = 2
                 elif event.code == "BTN_BASE":
@@ -128,6 +128,7 @@ class Gamepad:
             if event.state == 1:
                 if event.code == "BTN_TOP2":
                     self.go = True
+                    self.danbus.setGo()
                     print("Config Mode?")
                     self.state = 3
                 elif event.code == "BTN_BASE":
@@ -161,6 +162,7 @@ class Gamepad:
                     self.SaveConstants()
                 elif event.code == "BTN_BASE" or event.code == "BTN_BASE2":
                     print("Go?")
+                    self.danbus.setStop()
                     self.go = False
                     self.state = 2
     
@@ -179,12 +181,15 @@ class Gamepad:
                         self.state = 7
                         self.zMode = 0
                         self.yaw = 0
+                        self.danbus.setZ(self.yaw)
+                        self.danbus.setZMode(0)
                         print("Yaw Mode Acro")
                         print("Constant Yaw?")
                     elif self.mode == 2:
                         self.state = 8
                         self.tMode = 0
                         self.throttle = self.minThrottle
+                        self.danbus.setThrottle(self.throttle)
                         print("Throttle Mode Acro")
                         print("Constant Throttle?")
                 elif event.code == "BTN_THUMB":
@@ -199,12 +204,15 @@ class Gamepad:
                         self.state = 7
                         self.zMode = 1
                         self.yaw = 0
+                        self.danbus.setZ(self.yaw)
+                        self.danbus.setZMode(1)
                         print("Yaw Mode Stabilize")
                         print("Constant Yaw?")
                     elif self.mode == 2:
                         self.state = 8
                         self.tMode = 1
                         self.throttle = self.minThrottle
+                        self.danbus.setT(self.throttle)
                         print("Throttle Mode Stabilize")
                         print("Constant Throttle?")
                 elif event.code == "BTN_THUMB2":
@@ -219,12 +227,14 @@ class Gamepad:
                         self.state = 7
                         self.zMode = 2
                         self.yaw = 0
+                        self.danbus.setZ(self.yaw)
                         print("Yaw Mode Off")
                         print("Constant Yaw?")
                     elif self.mode == 2:
                         self.state = 8
                         self.tMode = 2
                         self.throttle = self.minThrottle
+                        self.danbus.setT(self.throttle)
                         print("Throttle Mode Off")
                         print("Constant Throttle?")
                 elif event.code == "BTN_BASE":
@@ -235,6 +245,7 @@ class Gamepad:
                     self.SaveConstants()
                 elif event.code == "BTN_BASE2":
                     print("Go?")
+                    self.danbus.setStop()
                     self.go = False
                     self.state = 2
     
@@ -248,6 +259,7 @@ class Gamepad:
                 self.SaveConstants()
             elif event.code == "BTN_BASE2":
                 print("Go?")
+                self.danbus.setStop()
                 self.go = False
                 self.state = 2
 
@@ -257,27 +269,27 @@ class Gamepad:
                 if event.code == "BTN_TRIGGER":
                     self.state = 9
                     print("Adjust Constant kpa xy")
-                    self.const_index = 0
+                    #self.const_index = 0
                 elif event.code == "BTN_THUMB":
                     self.state = 9
                     print("Adjust Constant kia xy")
-                    self.const_index = 5
+                    #self.const_index = 5
                 elif event.code == "BTN_THUMB2":
                     self.state = 9
                     print("Adjust Constant kda xy")
-                    self.const_index = 10
+                    #self.const_index = 10
                 elif event.code == "BTN_TOP":
                     self.state = 9
                     print("Adjust Constant kps xy")
-                    self.const_index = 1
+                    #self.const_index = 1
                 elif event.code == "BTN_TOP2":
                     self.state = 9
                     print("Adjust Constant kis xy")
-                    self.const_index = 6
+                    #self.const_index = 6
                 elif event.code == "BTN_PINKIE":
                     self.state = 9
                     print("Adjust Constant kds xy")
-                    self.const_index = 11
+                    #self.const_index = 11
                 elif event.code == "BTN_BASE":
                     print("Mode?")
                     self.state = 4
@@ -286,6 +298,7 @@ class Gamepad:
                     self.SaveConstants()
                 elif event.code == "BTN_BASE2":
                     print("Go?")
+                    self.danbus.setStop()
                     self.go = False
                     self.state = 2
                 
@@ -295,27 +308,27 @@ class Gamepad:
                 if event.code == "BTN_TRIGGER":
                     self.state = 9
                     print("Adjust Constant kpa yaw")
-                    self.const_index = 2
+                    self.const_index = 0
                 elif event.code == "BTN_THUMB":
                     self.state = 9
                     print("Adjust Constant kia yaw")
-                    self.const_index = 7
+                    self.const_index = 3
                 elif event.code == "BTN_THUMB2":
                     self.state = 9
                     print("Adjust Constant kda yaw")
-                    self.const_index = 12
+                    self.const_index = 6
                 elif event.code == "BTN_TOP":
                     self.state = 9
                     print("Adjust Constant kps yaw")
-                    self.const_index = 3
+                    self.const_index = 1
                 elif event.code == "BTN_TOP2":
                     self.state = 9
                     print("Adjust Constant kis yaw")
-                    self.const_index = 8
+                    self.const_index = 4
                 elif event.code == "BTN_PINKIE":
                     self.state = 9
                     print("Adjust Constant kds yaw")
-                    self.const_index = 13
+                    self.const_index = 7
                 elif event.code == "BTN_BASE":
                     print("Mode?")
                     self.state = 4
@@ -324,6 +337,7 @@ class Gamepad:
                     self.SaveConstants()
                 elif event.code == "BTN_BASE2":
                     print("Go?")
+                    self.danbus.setStop()
                     self.go = False
                     self.state = 2
     
@@ -333,19 +347,19 @@ class Gamepad:
                 if event.code == "BTN_TRIGGER":
                     self.state = 9
                     print("Adjust Constant kp throttle")
-                    self.const_index = 4
+                    self.const_index = 2
                 elif event.code == "BTN_THUMB":
                     self.state = 9
                     print("Adjust Constant ki throttle")
-                    self.const_index = 9
+                    self.const_index = 5
                 elif event.code == "BTN_THUMB2":
                     self.state = 9
                     print("Adjust Constant kd throttle")
-                    self.const_index = 14
+                    self.const_index = 8
                 elif event.code == "BTN_TOP":
                     self.state = 9
                     print("Adjust Constant hover throttle")
-                    self.const_index = 15
+                    self.const_index = 9
                 elif event.code == "BTN_BASE":
                     print("Mode?")
                     self.state = 4
@@ -354,8 +368,31 @@ class Gamepad:
                     self.SaveConstants()
                 elif event.code == "BTN_BASE2":
                     print("Go?")
+                    self.danbus.setStop()
                     self.go = False
                     self.state = 2
+
+    def constantDanBusMux(self, value):
+        if self.const_index == 0:
+            self.danbus.setKpaZ(value)
+        elif self.const_index == 1:
+            self.danbus.setKpsZ(value)
+        elif self.const_index == 2:
+            self.danbus.setKpsT(value)
+        elif self.const_index == 3:
+            self.danbus.setKiaZ(value)
+        elif self.const_index == 4:
+            self.danbus.setKisZ(value)
+        elif self.const_index == 5:
+            self.danbus.setKisT(value)
+        elif self.const_index == 6:
+            self.danbus.setKdaZ(value)
+        elif self.const_index == 7:
+            self.danbus.setKdsZ(value)
+        elif self.const_index == 8:
+            self.danbus.setKdsT(value)
+        elif self.const_index == 9:
+            self.danbus.setHoverT(value)
 
     def Adjust(self):
         for event in self.events:
@@ -378,6 +415,7 @@ class Gamepad:
                     self.SaveConstants()
             elif event.code == "BTN_BASE2":
                 self.go = False
+                self.danbus.setStop()
                 print("Go?")
                 self.state = 2
         if self.const_index < 5:
@@ -403,7 +441,8 @@ class Gamepad:
             self.throttle = self.maxThrottle - (self.throttle - self.minThrottle)
             if abs(self.throttle) < 1040 and self.throttle != 1000:
                 self.throttle = 1000
-            print("Throttle: " + str(self.throttle))
+            self.danbus.setThrottle(self.throttle)
+            #print("Throttle: " + str(self.throttle))
 
     def YawSense(self):
         for event in self.events:
@@ -413,7 +452,8 @@ class Gamepad:
         self.yaw = self.map_num(self.joystickStateYaw, self.minJoystick, self.maxJoystick, -self.maxDPS, self.maxDPS)
         if abs(self.yaw) < 3 and self.yaw != 0:
             self.yaw = 0
-        print("Yaw: " + str(self.yaw))
+        self.danbus.setYaw(self.yaw)
+        #print("Yaw: " + str(self.yaw))
 
     def PitchSense(self, joystickPosition, mode):
         for event in self.events:
@@ -436,7 +476,7 @@ class Gamepad:
             if abs(self.pitch) < 6 and self.pitch != 0:
                 self.pitch = 0
 
-        print("Pitch: " + str(self.pitch))
+        #print("Pitch: " + str(self.pitch))
 
     def RollSense(self, joystickPosition, mode):
         for event in self.events:
@@ -455,7 +495,7 @@ class Gamepad:
             if abs(self.roll) < 6 and self.roll != 0:
                 self.roll = 0
 
-        print("Roll: " + str(self.roll))
+        #print("Roll: " + str(self.roll))
 
     def map_num(self, num, fromLow, fromHigh, toLow, toHigh):
         return (num - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow

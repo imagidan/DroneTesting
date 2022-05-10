@@ -3,6 +3,7 @@ import jetson.utils as utils
 import cv2
 import numpy as np
 from math import ceil, floor
+import time
 
 class Detector:
 
@@ -45,6 +46,22 @@ class Detector:
     
     def getVerticalAngle(self, detection):
         return (detection.Center[1] - self.imgH/2)/(self.imgH/2)*(self.FOV*(self.imgH/self.imgW)/2)
+
+    def trackPlateHeightAngle(self, hover, kp, ki, kd, center, lastCenter, minThrottle, maxThrottle, errorI):
+        myI = errorI + ki * center
+        myI = np.clip(myI, minThrottle - hover, maxThrottle - hover)
+        inputD = center - lastCenter
+        yawPID = kp * center + errorI - kd * inputD
+        throttle = np.clip(hover + yawPID, minThrottle, maxThrottle)
+        return throttle, myI
+
+    def smooth(throttle, pastTime, interval, up, minThrottle, maxThrottle):
+        if time.time() - pastTime >= interval:
+            pastTime = time.time()
+            speed = np.clip(throttle + up, minThrottle, maxThrottle)
+            return speed, pastTime
+        else:
+            return throttle, pastTime
 
     def getDistance(self, detection):
         return self.distConst / detection.Width
